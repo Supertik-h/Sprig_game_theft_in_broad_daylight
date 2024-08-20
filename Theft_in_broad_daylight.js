@@ -9,8 +9,13 @@ const player_fat = "1"
 const player_thin = "2"
 const prison_grate = "p"
 const gold = "g"
-const door = "d"
+const door_f = "d"
+const door_t = "t"
 const floor = "f"
+const bed = "b"
+const green = "e"
+const red = "r"
+const hole = "h"
 
 setLegend(
   [ player_fat, bitmap`
@@ -81,55 +86,151 @@ LLLLLLLLLLLLLLLL` ],
 ................
 ................
 ................` ],
-  [ door, bitmap`
+  [ door_f, bitmap`
 LLLLLLLLLLLLLLLL
-L..L11.1.1.1..LL
-L.LL11.1.1.1..LL
-L.L.11.1.1.1.LLL
-L.L.11.1.1.1.L.L
-L.L.1111.1.1.L.L
-L.L.1001.1.1.L.L
-L.L.1101.1.1.L.L
-L.L.1111.1.1.L.L
-L.L.11.1.1.1.L.L
-L.L.11.1.1.1.L.L
-L.L.11.1.1.1LL.L
-L.L.11.1.1.1L..L
-LLL.11.1.1.1L..L
-LL..11.1.1.1L..L
+L..L22.2.2.2..LL
+L.LL22.2.2.2..LL
+L.L.22.2.2.2.LLL
+L.L.22.2.2.2.L.L
+L.L.2222.2.2.L.L
+L.L.2002.2.2.L.L
+L.L.2202.2.2.L.L
+L.L.2222.2.2.L.L
+L.L.22.2.2.2.L.L
+L.L.22.2.2.2.L.L
+L.L.22.2.2.2LL.L
+L.L.22.2.2.2L..L
+LLL.22.2.2.2L..L
+LL..22.2.2.2L.LL
+LLLLLLLLLLLLLLLL` ],
+  [ door_t, bitmap`
+LLLLLLLLLLLLLLLL
+L..L22.2.2.2..LL
+L.LL22.2.2.2..LL
+L.L.22.2.2.2.LLL
+L.L.22.2.2.2.L.L
+L.L.2222.2.2.L.L
+L.L.2002.2.2.L.L
+L.L.2202.2.2.L.L
+L.L.2222.2.2.L.L
+L.L.22.2.2.2.L.L
+L.L.22.2.2.2.L.L
+L.L.22.2.2.2LL.L
+L.L.22.2.2.2L..L
+LLL.22.2.2.2L..L
+LL..22.2.2.2L..L
 LLLLLLLLLLLLLLLL` ],
   [ floor, bitmap`
-LLLLL1LLLLLL1LLL
-L1L1111LL1111L1L
-L111111LLLL1111L
-LL11LL11L111L111
-LL11L11LL1L111LL
-1LL1111LL111111L
-L111111LL111111L
-LLLL1LLL1LLLL1LL
-LLLLLLLLLLL1LLLL
-L1L11111L111111L
-L111111LL1L1L1LL
-L111L11LL11111LL
-L1L1111L1111111L
-L1L11L1LL111L11L
-L1111111L111111L
-LLL1LLLLLLLL1LLL` ],
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111
+1111111111111111` ],
+  [ bed, bitmap`
+................
+................
+................
+................
+................
+................
+.33333333332222.
+.33333333332222.
+.33333333332222.
+.33333333332222.
+.33333333332222.
+................
+................
+................
+................
+................` ],
+  [ green, bitmap`
+................
+................
+..444444444444..
+..444444444444..
+..444444444444..
+..444444444444..
+..444444444444..
+..444444444444..
+..444444444444..
+..444444444444..
+..444444444444..
+..444444444444..
+..444444444444..
+..444444444444..
+................
+................` ],
+  [ red, bitmap`
+................
+................
+..333333333333..
+..333333333333..
+..333333333333..
+..333333333333..
+..333333333333..
+..333333333333..
+..333333333333..
+..333333333333..
+..333333333333..
+..333333333333..
+..333333333333..
+..333333333333..
+................
+................` ],
+  [ hole, bitmap`
+................
+................
+................
+................
+......LLLL......
+.....LLL0LL.....
+....LL000LLL....
+....L00000LL....
+....LL00000L....
+.....LL0000L....
+.....LL00LLL....
+......LLLLL.....
+................
+................
+................
+................` ],
   
 )
 
-setSolids([player_fat, player_thin, prison_grate])
+setSolids([player_fat, player_thin, prison_grate, door_t, door_f])
 
+var score  = 0
 let level = 0
+let is_door_t_open = 0
+let is_door_f_open = 0
+
+addText(`Score: ${score}`,{x: 10, y: 0, color: color`0`})
+
 const levels = [
   map`
-..p..
-..p..
-dpppp
-g12..
-.....`
+1..p....
+...p..g.
+pdpp...h
+........
+........
+..g.ptpp
+....p.r.
+e...p..2`
 ]
 
+
+setBackground("f")
 setMap(levels[level])
 
 setPushables({
@@ -166,6 +267,30 @@ onInput("j", () => {
   getFirst(player_thin).x -= 1
 })
 
+
+
 afterInput(() => {
+  if(is_door_t_open == 1){
+    setSolids([player_fat, player_thin, prison_grate, door_f])
+  }
+
+  if(is_door_f_open == 1){
+    setSolids([player_fat, player_thin, prison_grate, door_t])
+  }
+
+  if(tilesWith(red, player_thin).length >= 1){
+    setSolids([player_fat, player_thin, prison_grate, door_t])
+  }
+
+  if(tilesWith(green, player_fat).length >= 1){
+    setSolids([player_fat, player_thin, prison_grate])
+  }
+
+
+
+
+
+
+
   
 })
