@@ -21,6 +21,7 @@ const lever_r = "l"
 const lever_l = "v"
 const police = "i"
 const vision = "s"
+const orange = "o"
 
 setLegend(
   [ player_fat, bitmap`
@@ -296,6 +297,24 @@ LLLLLLLLLLLLLLLL` ],
 1222222222222221
 1222222222222221
 1111111111111111` ],
+  [ orange, bitmap`
+................
+................
+..999999999999..
+..999999999999..
+..999999999999..
+..999999999999..
+..999999999999..
+..999999999999..
+..999999999999..
+..999999999999..
+..999999999999..
+..999999999999..
+..999999999999..
+..999999999999..
+................
+................` ],
+  
   
 )
 
@@ -321,14 +340,14 @@ pdpp...h
 e...p..2`,
   map`
 ..t..p..h
-..p..p...
+.gp..pg..
 ..p..pss.
 .lp..pis.
 dpp..pss.
 12p..p...
-.rp..p.ss
+grpg.p.ss
 bbpx.d.si
-pppe.p.ss`
+pppo.p.ss`
 ]
 
 
@@ -387,6 +406,7 @@ afterInput(() => {
   let thino = getFirst(player_thin)
   let leverR = getFirst(lever_r);
   let leverL = getFirst(lever_l);
+  let golds = getAll(gold)
   
    if(is_door_t_open == 1){
     setSolids([player_fat, box,  player_thin, prison_grate, door_f])
@@ -407,12 +427,60 @@ afterInput(() => {
   if(tilesWith(player_fat, lever_r).length >= 1){
     leverR.remove()
     addSprite(leverR.x, leverR.y, lever_l);
+     let leverL = getFirst(lever_l);
     setSolids([player_fat, box, player_thin, prison_grate])
    setTimeout(() => {
-      setSolids([player_fat, box, player_thin, prison_grate, door_t]), addSprite(leverR.x, leverR.y, lever_r);
+      leverL.remove(), setSolids([player_fat, box, player_thin, prison_grate, door_t]), addSprite(leverR.x, leverR.y, lever_r);
   }, 7000);
-  
+   
   }
+  if(tilesWith(player_thin, lever_r).length >= 1){
+    leverR.remove()
+    addSprite(leverR.x, leverR.y, lever_l);
+     let leverL = getFirst(lever_l);
+    setSolids([player_fat, box, player_thin, prison_grate])
+   setTimeout(() => {
+      leverL.remove(), setSolids([player_fat, box, player_thin, prison_grate, door_t]), addSprite(leverR.x, leverR.y, lever_r);
+  }, 6000);
+   
+  }
+  
+  for (let i = 0; i < golds.length; i++) {
+    if (fato.x === golds[i].x && fato.y === golds[i].y) {
+      golds[i].remove()
+      score += 1;
+      clearText()
+      addText(`Score: ${score}`, { x: 10, y: 0, color: color`0` })
+
+    }
+  }
+  for (let i = 0; i < golds.length; i++) {
+    if (thino.x === golds[i].x && thino.y === golds[i].y) {
+      golds[i].remove()
+      score += 1;
+      clearText()
+      addText(`Score: ${score}`, { x: 10, y: 0, color: color`0` })
+
+    }
+  }
+
+  if(tilesWith(box, orange).length >= 1){
+    setSolids([player_fat, box, player_thin, prison_grate, door_t])
+    setTimeout(() => {
+      setSolids([player_fat, box, player_thin, prison_grate, door_f, door_t])
+  }, 10000);
+  }
+
+  if(tilesWith(player_fat, vision).length >= 1){
+    addText(`Game over`, { x: 3, y: 6, color: color`0` })
+     getAll().forEach(sprite => {
+    sprite.remove();
+    });
+  }
+
+
+
+  
   if(tilesWith(player_fat, hole).length >= 1){
     fato.remove()
     checker += 1
