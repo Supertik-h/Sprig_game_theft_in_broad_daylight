@@ -372,8 +372,6 @@ onInput("j", () => {
   getFirst(player_thin).x -= 1
 })
 
-
-
 /*
 let originalSetSolids = setSolids;
 
@@ -383,32 +381,13 @@ let modifiedSetSolids = (arr, elementIndexToRemove) => {
   originalSetSolids(modifiedArr); 
 */
 
-
 afterInput(() => {
+
   let fato = getFirst(player_fat)
   let thino = getFirst(player_thin)
   let leverR = getFirst(lever_r);
-  /*
-  if (is_door_t_open == 1) {
-    let solidsArr = [player_fat, player_thin, prison_grate, door_f];
-    let elementIndexToRemove = solidsArr.indexOf("door_t");
-    modifiedSetSolids(solidsArr, elementIndexToRemove);
-  }
-
-  if (is_door_f_open == 1) {
-    let solidsArr = [player_fat, player_thin, prison_grate, door_t];
-    let elementIndexToRemove = solidsArr.indexOf("door_f");
-    modifiedSetSolids(solidsArr, elementIndexToRemove);
-  }
-
-  if (tilesWith(red, player_thin).length >= 1) {
-    is_door_f_open = 1;
-  }
-
-  if (tilesWith(green, player_fat).length >= 1) {
-    is_door_t_open = 1;
-  }
-  */
+  let leverL = getFirst(lever_l);
+  
    if(is_door_t_open == 1){
     setSolids([player_fat, box,  player_thin, prison_grate, door_f])
   }
@@ -424,8 +403,16 @@ afterInput(() => {
   if(tilesWith(green, player_fat).length >= 1){
     setSolids([player_fat, box, player_thin, prison_grate])
   }
-
   
+  if(tilesWith(player_fat, lever_r).length >= 1){
+    leverR.remove()
+    addSprite(leverR.x, leverR.y, lever_l);
+    setSolids([player_fat, box, player_thin, prison_grate])
+   setTimeout(() => {
+      setSolids([player_fat, box, player_thin, prison_grate, door_t]), addSprite(leverR.x, leverR.y, lever_r);
+  }, 7000);
+  
+  }
   if(tilesWith(player_fat, hole).length >= 1){
     fato.remove()
     checker += 1
@@ -435,24 +422,8 @@ afterInput(() => {
     thino.remove()
     checker += 1
   }
-
-
-  if (fato.x === leverR.x && fato.y === leverR.y) {
-    leverR.remove(); // Usuń lever_r
-    addSprite(leverR.x, leverR.y, lever_l); // Dodaj lever_l na jego miejscu
-  }
-
-  // Sprawdź kolizję z graczem thin
-  if (thino.x === leverR.x && thino.y === leverR.y) {
-    leverR.remove(); // Usuń lever_r
-    addSprite(leverR.x, leverR.y, lever_l); // Dodaj lever_l na jego miejscu
-  }
-
-
-  
-  
   if(checker == 2){
-    cheker = 0
+    checker = 0
     levelNumber++
     setMap(levels[levelNumber])
     setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f])
