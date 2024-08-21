@@ -143,14 +143,14 @@ LLLLLLLLLLLLLLLL` ],
 ................
 ................
 ................
-................
 .33333333332222.
 .33333333332222.
 .33333333332222.
 .33333333332222.
 .33333333332222.
-................
-................
+.33333333332222.
+.C............C.
+.C............C.
 ................
 ................
 ................` ],
@@ -219,19 +219,21 @@ addText(`Score: ${score}`,{x: 10, y: 0, color: color`0`})
 
 const levels = [
   map`
-1..p....
+.1bp....
 ...p..g.
 pdpp...h
 ........
 ........
 ..g.ptpp
-....p.r.
+....p.rb
 e...p..2`
 ]
 
 
 setBackground("f")
-setMap(levels[level])
+
+const currentLevel = levels[level];
+setMap(currentLevel)
 
 setPushables({
   [  player_fat ]: []
@@ -267,10 +269,38 @@ onInput("j", () => {
   getFirst(player_thin).x -= 1
 })
 
+/*
+let originalSetSolids = setSolids;
 
+let modifiedSetSolids = (arr, elementIndexToRemove) => {
+  const modifiedArr = [...arr]; 
+  modifiedArr.splice(elementIndexToRemove, 1); 
+  originalSetSolids(modifiedArr); 
+*/
 
 afterInput(() => {
-  if(is_door_t_open == 1){
+  /*
+  if (is_door_t_open == 1) {
+    let solidsArr = [player_fat, player_thin, prison_grate, door_f];
+    let elementIndexToRemove = solidsArr.indexOf("door_t");
+    modifiedSetSolids(solidsArr, elementIndexToRemove);
+  }
+
+  if (is_door_f_open == 1) {
+    let solidsArr = [player_fat, player_thin, prison_grate, door_t];
+    let elementIndexToRemove = solidsArr.indexOf("door_f");
+    modifiedSetSolids(solidsArr, elementIndexToRemove);
+  }
+
+  if (tilesWith(red, player_thin).length >= 1) {
+    is_door_f_open = 1;
+  }
+
+  if (tilesWith(green, player_fat).length >= 1) {
+    is_door_t_open = 1;
+  }
+  */
+   if(is_door_t_open == 1){
     setSolids([player_fat, player_thin, prison_grate, door_f])
   }
 
@@ -285,12 +315,4 @@ afterInput(() => {
   if(tilesWith(green, player_fat).length >= 1){
     setSolids([player_fat, player_thin, prison_grate])
   }
-
-
-
-
-
-
-
-  
-})
+});
