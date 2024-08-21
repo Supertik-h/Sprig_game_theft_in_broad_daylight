@@ -22,6 +22,7 @@ const lever_l = "v"
 const police = "i"
 const vision = "s"
 const orange = "o"
+const button = "n"
 
 setLegend(
   [ player_fat, bitmap`
@@ -314,6 +315,23 @@ LLLLLLLLLLLLLLLL` ],
 ..999999999999..
 ................
 ................` ],
+  [ button, bitmap`
+................
+................
+................
+................
+................
+................
+................
+.....LLLLLL.....
+.....LLLLLL.....
+.....LLLLLL.....
+................
+................
+................
+................
+................
+................` ],
   
   
 )
@@ -347,7 +365,43 @@ dpp..pss.
 12p..p...
 grpg.p.ss
 bbpx.d.si
-pppo.p.ss`
+pppo.p.ss`,
+  map`
+sisg..p..h
+sss.r.d...
+......p..g
+.ppppppppp
+.pg.bbp..g
+.pl.12t.x.
+.ppppppp..
+.pngsipo..
+.t..sspppd
+.p........`,
+  map`,
+  
+...12.dh.p.
+.ppppdpppp.
+.p....g....
+.p.ppdpppp.
+gp.p.....p.
+.p.po..x.p.
+.p.p.gpptp.
+.p.pppp..p.
+.p......lpg
+.ppppppppp.
+...........`,
+  map`
+hppppppsssp
+.sss.ogsisp
+.sis.x.sssp
+.sss....tnp
+gpppdsssp.p
+.....sisp.p
+tppppsssp.p
+.sssppppp.p
+lsisp.....p
+.sssp...g.p
+.......21.p`
 ]
 
 
@@ -438,9 +492,9 @@ afterInput(() => {
     leverR.remove()
     addSprite(leverR.x, leverR.y, lever_l);
      let leverL = getFirst(lever_l);
-    setSolids([player_fat, box, player_thin, prison_grate])
+    setSolids([player_fat, box, player_thin, prison_grate, door_f])
    setTimeout(() => {
-      leverL.remove(), setSolids([player_fat, box, player_thin, prison_grate, door_t]), addSprite(leverR.x, leverR.y, lever_r);
+      leverL.remove(), setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f]), addSprite(leverR.x, leverR.y, lever_r);
   }, 6000);
    
   }
@@ -472,7 +526,14 @@ afterInput(() => {
   }
 
   if(tilesWith(player_fat, vision).length >= 1){
-    addText(`Game over`, { x: 3, y: 6, color: color`0` })
+    addText(`Game over`, { x: 5, y: 6, color: color`0` })
+     getAll().forEach(sprite => {
+    sprite.remove();
+    });
+  }
+
+  if(tilesWith(player_thin, vision).length >= 1){
+    addText(`Game over`, { x: 5, y: 6, color: color`0` })
      getAll().forEach(sprite => {
     sprite.remove();
     });
