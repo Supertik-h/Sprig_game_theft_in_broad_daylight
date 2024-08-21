@@ -302,6 +302,7 @@ LLLLLLLLLLLLLLLL` ],
 setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f])
 
 var score  = 0
+var checker = 0
 let level = 0
 let is_door_t_open = 0
 let is_door_f_open = 0
@@ -314,9 +315,9 @@ const levels = [
 ...p..g.
 pdpp...h
 ........
-sx.lv...
-isg.ptpp
-s...p.rb
+........
+..g.ptpp
+....p.rb
 e...p..2`,
   map`
 ..t..p..h
@@ -333,8 +334,8 @@ pppe.p.ss`
 
 setBackground("f")
 
-const currentLevel = levels[level];
-setMap(currentLevel)
+let levelNumber = 0
+setMap(levels[level])
 
 setPushables({
   [  player_fat ]: [box],
@@ -371,6 +372,8 @@ onInput("j", () => {
   getFirst(player_thin).x -= 1
 })
 
+
+
 /*
 let originalSetSolids = setSolids;
 
@@ -380,7 +383,11 @@ let modifiedSetSolids = (arr, elementIndexToRemove) => {
   originalSetSolids(modifiedArr); 
 */
 
+
 afterInput(() => {
+  let fato = getFirst(player_fat)
+  let thino = getFirst(player_thin)
+  let leverR = getFirst(lever_r);
   /*
   if (is_door_t_open == 1) {
     let solidsArr = [player_fat, player_thin, prison_grate, door_f];
@@ -416,5 +423,38 @@ afterInput(() => {
 
   if(tilesWith(green, player_fat).length >= 1){
     setSolids([player_fat, box, player_thin, prison_grate])
+  }
+
+  
+  if(tilesWith(player_fat, hole).length >= 1){
+    fato.remove()
+    checker += 1
+  }
+
+  if(tilesWith(player_thin, hole).length >= 1){
+    thino.remove()
+    checker += 1
+  }
+
+
+  if (fato.x === leverR.x && fato.y === leverR.y) {
+    leverR.remove(); // Usuń lever_r
+    addSprite(leverR.x, leverR.y, lever_l); // Dodaj lever_l na jego miejscu
+  }
+
+  // Sprawdź kolizję z graczem thin
+  if (thino.x === leverR.x && thino.y === leverR.y) {
+    leverR.remove(); // Usuń lever_r
+    addSprite(leverR.x, leverR.y, lever_l); // Dodaj lever_l na jego miejscu
+  }
+
+
+  
+  
+  if(checker == 2){
+    cheker = 0
+    levelNumber++
+    setMap(levels[levelNumber])
+    setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f])
   }
 });
