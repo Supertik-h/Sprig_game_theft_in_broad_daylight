@@ -376,9 +376,9 @@ sss.r.d...
 .ppppppp..
 .pngsipo..
 .t..sspppd
-.p........`,
-  map`,
-  
+np........`,
+  map`
+
 ...12.dh.p.
 .ppppdpppp.
 .p....g....
@@ -469,6 +469,7 @@ afterInput(() => {
   if(is_door_f_open == 1){
     setSolids([player_fat, box, player_thin, prison_grate, door_t])
   }
+  // opening the door using color 
 
   if(tilesWith(red, player_thin).length >= 1){
     setSolids([player_fat, box, player_thin, prison_grate, door_t])
@@ -478,14 +479,15 @@ afterInput(() => {
     setSolids([player_fat, box, player_thin, prison_grate])
   }
   
+  // lever interaction
   if(tilesWith(player_fat, lever_r).length >= 1){
     leverR.remove()
     addSprite(leverR.x, leverR.y, lever_l);
      let leverL = getFirst(lever_l);
-    setSolids([player_fat, box, player_thin, prison_grate])
+    setSolids([player_fat, box, player_thin, prison_grate, door_f])
    setTimeout(() => {
       leverL.remove(), setSolids([player_fat, box, player_thin, prison_grate, door_t]), addSprite(leverR.x, leverR.y, lever_r);
-  }, 7000);
+  }, 8000);
    
   }
   if(tilesWith(player_thin, lever_r).length >= 1){
@@ -495,10 +497,10 @@ afterInput(() => {
     setSolids([player_fat, box, player_thin, prison_grate, door_f])
    setTimeout(() => {
       leverL.remove(), setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f]), addSprite(leverR.x, leverR.y, lever_r);
-  }, 6000);
+  }, 8000);
    
   }
-  
+  // collecting gold
   for (let i = 0; i < golds.length; i++) {
     if (fato.x === golds[i].x && fato.y === golds[i].y) {
       golds[i].remove()
@@ -525,6 +527,21 @@ afterInput(() => {
   }, 10000);
   }
 
+  //button collison
+  if(tilesWith(player_fat, button).length >= 1){
+    setSolids([player_fat, box, player_thin, prison_grate, door_f])
+   setTimeout(() => {
+      setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f])
+  }, 8000);
+  }
+  if(tilesWith(player_thin, button).length >= 1){
+    setSolids([player_fat, box, player_thin, prison_grate, door_f])
+   setTimeout(() => {
+      setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f])
+  }, 8000);
+  }
+  
+  // collision with vision
   if(tilesWith(player_fat, vision).length >= 1){
     addText(`Game over`, { x: 5, y: 6, color: color`0` })
      getAll().forEach(sprite => {
