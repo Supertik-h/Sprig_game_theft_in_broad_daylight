@@ -26,6 +26,46 @@ const button = "n"
 const secure_door = "@"
 const card = "("
 
+const BackgroundSong = tune`
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + D5-238.0952380952381 + E5-238.0952380952381 + F5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + B4/238.0952380952381 + D5^238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + B4/238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + D5-238.0952380952381 + E5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + E5-238.0952380952381 + F5-238.0952380952381 + D5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + F5-238.0952380952381 + E5-238.0952380952381 + D5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + D5-238.0952380952381 + E5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + B4/238.0952380952381 + D5^238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + B4/238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + B4/238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + D5-238.0952380952381 + E5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + E5-238.0952380952381 + D5-238.0952380952381 + F5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + F5-238.0952380952381 + E5-238.0952380952381 + D5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + D5-238.0952380952381 + E5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + B4/238.0952380952381 + D5^238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + B4/238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + B4/238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + E5-238.0952380952381 + D5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + D5-238.0952380952381 + E5-238.0952380952381 + F5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + D5-238.0952380952381 + E5-238.0952380952381 + F5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + D5-238.0952380952381 + E5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + B4/238.0952380952381 + D5^238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + B4/238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + B4/238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + E5-238.0952380952381 + D5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + D5-238.0952380952381 + E5-238.0952380952381 + F5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + D5-238.0952380952381 + E5-238.0952380952381 + F5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + D5-238.0952380952381 + E5-238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + B4/238.0952380952381 + D5^238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + B4/238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + B4/238.0952380952381,
+238.0952380952381: G4~238.0952380952381 + A4^238.0952380952381 + D5-238.0952380952381 + E5-238.0952380952381`
+const open = tune`
+85.95988538681948: C5~85.95988538681948 + D5~85.95988538681948 + B4-85.95988538681948 + E5^85.95988538681948 + A4/85.95988538681948,
+85.95988538681948: C5~85.95988538681948 + B4~85.95988538681948 + A4-85.95988538681948 + D5^85.95988538681948 + G4/85.95988538681948,
+2578.7965616045844`
+
+//playTune(BackgroundSong, Infinity)
+
 setLegend(
   [ player_fat, bitmap`
 ................
@@ -523,15 +563,18 @@ afterInput(() => {
   // opening the door using color 
 
   if(tilesWith(red, player_thin).length >= 1){
+    playTune(open, 1)
     setSolids([player_fat, box, player_thin, prison_grate, door_t, secure_door])
   }
 
   if(tilesWith(green, player_fat).length >= 1){
+    playTune(open, 1)
     setSolids([player_fat, box, player_thin, prison_grate, secure_door])
   }
   
   // lever interaction
   if(tilesWith(player_fat, lever_r).length >= 1){
+    playTune(open, 1)
     leverR.remove()
     addSprite(leverR.x, leverR.y, lever_l);
      let leverL = getFirst(lever_l);
@@ -542,6 +585,7 @@ afterInput(() => {
    
   }
   if(tilesWith(player_thin, lever_r).length >= 1){
+    playTune(open, 1)
     leverR.remove()
     addSprite(leverR.x, leverR.y, lever_l);
      let leverL = getFirst(lever_l);
@@ -557,7 +601,7 @@ afterInput(() => {
       golds[i].remove()
       score += 1;
       clearText()
-      addText(`Score: ${score}`, { x: 0, y: 0, color: color`0` })
+      addText(`Score: ${score}`, { x: 9, y: 0, color: color`0` })
 
     }
   }
@@ -572,6 +616,7 @@ afterInput(() => {
   }
 
   if(tilesWith(box, orange).length >= 1){
+    playTune(open, 1)
     setSolids([player_fat, box, player_thin, prison_grate, door_t, secure_door])
     setTimeout(() => {
       setSolids([player_fat, box, player_thin, prison_grate, door_f, door_t, secure_door])
@@ -580,12 +625,14 @@ afterInput(() => {
 
   //button collison
   if(tilesWith(player_fat, button).length >= 1){
+    playTune(open, 1)
     setSolids([player_fat, box, player_thin, prison_grate, door_f, secure_door])
    setTimeout(() => {
       setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f, secure_door])
   }, 8000);
   }
   if(tilesWith(player_thin, button).length >= 1){
+    playTune(open, 1)
     setSolids([player_fat, box, player_thin, prison_grate, door_f, secure_door])
    setTimeout(() => {
       setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f, secure_door])
@@ -606,10 +653,23 @@ afterInput(() => {
     sprite.remove();
     });
   }
-  
+  // card collison
   for (let i = 0; i < cardo.length; i++) {
+    
     if (fato.x === cardo[i].x && fato.y === cardo[i].y) {
       cardo[i].remove()
+      playTune(open, 1)
+      setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f])
+      setTimeout(() => {
+      setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f, secure_door])
+  }, 8000);
+    }
+  }
+
+  for (let i = 0; i < cardo.length; i++) {
+    if (thino.x === cardo[i].x && thino.y === cardo[i].y) {
+      cardo[i].remove()
+      playTune(open, 1)
       setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f])
       setTimeout(() => {
       setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f, secure_door])
