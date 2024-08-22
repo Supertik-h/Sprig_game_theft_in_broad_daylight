@@ -494,18 +494,31 @@ lsisp.....p
 .sssp...g.p
 .......21.p`,
   map`
-ph...p.....p
-p....d.x..op
+ph...pn....p
+p....t.....p
 pppppp@ppppp
 ....op..(p..
 .x...p...p..
 .....p...p..
-@ppdpppdpptp
-.(p..p.....n
-..p.(p.x...o
+@ppdppptpptp
+.(p..pl....n
+..p.(p......
 ..p@pppppp@p
 ..p.lp..np..
-12p..t...t.(`
+12p..t...t.(`,
+  map`
+............
+..pppppppp..
+..pb2ppb1p..
+..p..tt.nd..
+..p..pp.rp..
+.(ppppppppp@
+pppppppppp..
+..p..pph.p..
+..p..pp..p..
+..p.(pp..p..
+..pptpp@pp..
+...n........`
 ]
 
 
@@ -566,6 +579,8 @@ afterInput(() => {
   let leverL = getFirst(lever_l);
   let golds = getAll(gold)
   let cardo = getAll(card)
+  let greeno = getFirst(green)
+  let redo = getFirst(red)
   
   
    if(is_door_t_open == 1){
@@ -578,11 +593,13 @@ afterInput(() => {
   // opening the door using color 
 
   if(tilesWith(red, player_thin).length >= 1){
+    //redo.remove()
     playTune(open, 1)
     setSolids([player_fat, box, player_thin, prison_grate, door_t, secure_door])
   }
 
   if(tilesWith(green, player_fat).length >= 1){
+    greeno.remove()
     playTune(open, 1)
     setSolids([player_fat, box, player_thin, prison_grate, secure_door])
   }
@@ -632,6 +649,9 @@ afterInput(() => {
     }
   }
 
+
+  
+          
   if(tilesWith(box, orange).length >= 1){
     playTune(open, 1)
     let boxo = getFirst(box)
@@ -644,6 +664,8 @@ afterInput(() => {
       setSolids([player_fat, box, player_thin, prison_grate, door_f, door_t, secure_door])
   }, 10000);
   }
+
+  
 
   //button collison
   if(tilesWith(player_fat, button).length >= 1){
