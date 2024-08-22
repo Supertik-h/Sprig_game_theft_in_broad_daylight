@@ -63,6 +63,20 @@ const open = tune`
 85.95988538681948: C5~85.95988538681948 + D5~85.95988538681948 + B4-85.95988538681948 + E5^85.95988538681948 + A4/85.95988538681948,
 85.95988538681948: C5~85.95988538681948 + B4~85.95988538681948 + A4-85.95988538681948 + D5^85.95988538681948 + G4/85.95988538681948,
 2578.7965616045844`
+const pick = tune`
+59.40594059405941: E5~59.40594059405941 + F5~59.40594059405941 + G5~59.40594059405941 + D5~59.40594059405941 + C5~59.40594059405941,
+59.40594059405941: F5~59.40594059405941 + G5~59.40594059405941 + A5~59.40594059405941 + E5~59.40594059405941 + D5~59.40594059405941,
+59.40594059405941: A5~59.40594059405941 + E5~59.40594059405941 + F5~59.40594059405941 + G5~59.40594059405941 + B5~59.40594059405941,
+1722.772277227723`
+
+const ded = tune`
+85.47008547008546: F5~85.47008547008546 + E5~85.47008547008546 + D5/85.47008547008546 + C5^85.47008547008546 + A4-85.47008547008546,
+85.47008547008546: E5~85.47008547008546 + D5~85.47008547008546 + C5/85.47008547008546 + B4^85.47008547008546 + G4-85.47008547008546,
+85.47008547008546: D5~85.47008547008546 + C5~85.47008547008546 + B4/85.47008547008546 + A4-85.47008547008546 + F4-85.47008547008546,
+85.47008547008546: C5~85.47008547008546 + B4~85.47008547008546 + A4/85.47008547008546 + G4^85.47008547008546 + E4-85.47008547008546,
+85.47008547008546: B4~85.47008547008546 + A4~85.47008547008546 + G4/85.47008547008546 + E4-85.47008547008546,
+85.47008547008546: G4~85.47008547008546 + B4~85.47008547008546 + C5/85.47008547008546 + E4-85.47008547008546 + A4~85.47008547008546,
+2222.222222222222`
 
 //playTune(BackgroundSong, Infinity)
 
@@ -553,6 +567,7 @@ afterInput(() => {
   let golds = getAll(gold)
   let cardo = getAll(card)
   
+  
    if(is_door_t_open == 1){
     setSolids([player_fat, box,  player_thin, prison_grate, door_f, secure_door])
   }
@@ -599,6 +614,7 @@ afterInput(() => {
   for (let i = 0; i < golds.length; i++) {
     if (fato.x === golds[i].x && fato.y === golds[i].y) {
       golds[i].remove()
+      playTune(pick, 1)
       score += 1;
       clearText()
       addText(`Score: ${score}`, { x: 9, y: 0, color: color`0` })
@@ -608,6 +624,7 @@ afterInput(() => {
   for (let i = 0; i < golds.length; i++) {
     if (thino.x === golds[i].x && thino.y === golds[i].y) {
       golds[i].remove()
+      playTune(pick, 1)
       score += 1;
       clearText()
       addText(`Score: ${score}`, { x: 9, y: 0, color: color`0` })
@@ -617,6 +634,11 @@ afterInput(() => {
 
   if(tilesWith(box, orange).length >= 1){
     playTune(open, 1)
+    let boxo = getFirst(box)
+    let orango = getFirst(orange)
+    boxo.remove()
+    orango.remove()
+    //let boxo = getFirst(box)
     setSolids([player_fat, box, player_thin, prison_grate, door_t, secure_door])
     setTimeout(() => {
       setSolids([player_fat, box, player_thin, prison_grate, door_f, door_t, secure_door])
@@ -642,6 +664,7 @@ afterInput(() => {
   // collision with vision
   if(tilesWith(player_fat, vision).length >= 1){
     addText(`Game over`, { x: 5, y: 6, color: color`0` })
+    playTune(ded, 1)
      getAll().forEach(sprite => {
     sprite.remove();
     });
@@ -649,6 +672,7 @@ afterInput(() => {
 
   if(tilesWith(player_thin, vision).length >= 1){
     addText(`Game over`, { x: 5, y: 6, color: color`0` })
+    playTune(ded, 1)
      getAll().forEach(sprite => {
     sprite.remove();
     });
