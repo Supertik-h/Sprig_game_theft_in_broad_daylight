@@ -23,6 +23,8 @@ const police = "i"
 const vision = "s"
 const orange = "o"
 const button = "n"
+const secure_door = "@"
+const card = "("
 
 setLegend(
   [ player_fat, bitmap`
@@ -332,6 +334,40 @@ LLLLLLLLLLLLLLLL` ],
 ................
 ................
 ................` ],
+  [ secure_door, bitmap`
+LLLLLLLLLLLLLLLL
+L..L77777777..LL
+L.LL77.7.7.7..LL
+L.L.77.7.7.7.LLL
+L.L.77.7.7.7.L.L
+L.L.77777777.L.L
+L.L.70077777.L.L
+L.L.77077777.L.L
+L.L.77777777.L.L
+L.L.77.7.7.7.L.L
+L.L.77.7.7.7.L.L
+L.L.77.7.7.7LL.L
+L.L.77777777L..L
+LLL.77777777L..L
+LL..77.7.7.7L..L
+LLLLLLLLLLLLLLLL` ],
+  [ card, bitmap`
+................
+................
+................
+................
+................
+................
+.....DDDDDDD....
+.....D44444D....
+.....D44444D....
+.....DDDDDDD....
+................
+................
+................
+................
+................
+................` ],
   
   
 )
@@ -344,7 +380,8 @@ let level = 0
 let is_door_t_open = 0
 let is_door_f_open = 0
 
-addText(`Score: ${score}`,{x: 10, y: 0, color: color`0`})
+
+addText(`Score: ${score}`,{x: 9, y: 0, color: color`0`})
 
 const levels = [
   map`
@@ -401,7 +438,20 @@ tppppsssp.p
 .sssppppp.p
 lsisp.....p
 .sssp...g.p
-.......21.p`
+.......21.p`,
+  map`
+ph...p.....p
+p....d.x..op
+pppppp@ppppp
+....op..(p..
+.x...p...p..
+.....p...p..
+@ppdpppdpptp
+.(p..p.....n
+..p.(p.x...o
+..p@pppppp@p
+..p.lp..np..
+12p..t...t.(`
 ]
 
 
@@ -461,22 +511,23 @@ afterInput(() => {
   let leverR = getFirst(lever_r);
   let leverL = getFirst(lever_l);
   let golds = getAll(gold)
+  let cardo = getAll(card)
   
    if(is_door_t_open == 1){
-    setSolids([player_fat, box,  player_thin, prison_grate, door_f])
+    setSolids([player_fat, box,  player_thin, prison_grate, door_f, secure_door])
   }
 
   if(is_door_f_open == 1){
-    setSolids([player_fat, box, player_thin, prison_grate, door_t])
+    setSolids([player_fat, box, player_thin, prison_grate, door_t, secure_door])
   }
   // opening the door using color 
 
   if(tilesWith(red, player_thin).length >= 1){
-    setSolids([player_fat, box, player_thin, prison_grate, door_t])
+    setSolids([player_fat, box, player_thin, prison_grate, door_t, secure_door])
   }
 
   if(tilesWith(green, player_fat).length >= 1){
-    setSolids([player_fat, box, player_thin, prison_grate])
+    setSolids([player_fat, box, player_thin, prison_grate, secure_door])
   }
   
   // lever interaction
@@ -484,9 +535,9 @@ afterInput(() => {
     leverR.remove()
     addSprite(leverR.x, leverR.y, lever_l);
      let leverL = getFirst(lever_l);
-    setSolids([player_fat, box, player_thin, prison_grate, door_f])
+    setSolids([player_fat, box, player_thin, prison_grate, door_f, secure_door])
    setTimeout(() => {
-      leverL.remove(), setSolids([player_fat, box, player_thin, prison_grate, door_t]), addSprite(leverR.x, leverR.y, lever_r);
+      leverL.remove(), setSolids([player_fat, box, player_thin, prison_grate, door_t, secure_door]), addSprite(leverR.x, leverR.y, lever_r);
   }, 8000);
    
   }
@@ -494,9 +545,9 @@ afterInput(() => {
     leverR.remove()
     addSprite(leverR.x, leverR.y, lever_l);
      let leverL = getFirst(lever_l);
-    setSolids([player_fat, box, player_thin, prison_grate, door_f])
+    setSolids([player_fat, box, player_thin, prison_grate, door_f,secure_door ])
    setTimeout(() => {
-      leverL.remove(), setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f]), addSprite(leverR.x, leverR.y, lever_r);
+      leverL.remove(), setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f, secure_door]), addSprite(leverR.x, leverR.y, lever_r);
   }, 8000);
    
   }
@@ -506,7 +557,7 @@ afterInput(() => {
       golds[i].remove()
       score += 1;
       clearText()
-      addText(`Score: ${score}`, { x: 10, y: 0, color: color`0` })
+      addText(`Score: ${score}`, { x: 0, y: 0, color: color`0` })
 
     }
   }
@@ -515,29 +566,29 @@ afterInput(() => {
       golds[i].remove()
       score += 1;
       clearText()
-      addText(`Score: ${score}`, { x: 10, y: 0, color: color`0` })
+      addText(`Score: ${score}`, { x: 9, y: 0, color: color`0` })
 
     }
   }
 
   if(tilesWith(box, orange).length >= 1){
-    setSolids([player_fat, box, player_thin, prison_grate, door_t])
+    setSolids([player_fat, box, player_thin, prison_grate, door_t, secure_door])
     setTimeout(() => {
-      setSolids([player_fat, box, player_thin, prison_grate, door_f, door_t])
+      setSolids([player_fat, box, player_thin, prison_grate, door_f, door_t, secure_door])
   }, 10000);
   }
 
   //button collison
   if(tilesWith(player_fat, button).length >= 1){
-    setSolids([player_fat, box, player_thin, prison_grate, door_f])
+    setSolids([player_fat, box, player_thin, prison_grate, door_f, secure_door])
    setTimeout(() => {
-      setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f])
+      setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f, secure_door])
   }, 8000);
   }
   if(tilesWith(player_thin, button).length >= 1){
-    setSolids([player_fat, box, player_thin, prison_grate, door_f])
+    setSolids([player_fat, box, player_thin, prison_grate, door_f, secure_door])
    setTimeout(() => {
-      setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f])
+      setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f, secure_door])
   }, 8000);
   }
   
@@ -555,10 +606,19 @@ afterInput(() => {
     sprite.remove();
     });
   }
-
-
-
   
+  for (let i = 0; i < cardo.length; i++) {
+    if (fato.x === cardo[i].x && fato.y === cardo[i].y) {
+      cardo[i].remove()
+      setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f])
+      setTimeout(() => {
+      setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f, secure_door])
+  }, 8000);
+    }
+  }
+
+
+  // jumping into the hole
   if(tilesWith(player_fat, hole).length >= 1){
     fato.remove()
     checker += 1
@@ -572,6 +632,6 @@ afterInput(() => {
     checker = 0
     levelNumber++
     setMap(levels[levelNumber])
-    setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f])
+    setSolids([player_fat, box, player_thin, prison_grate, door_t, door_f, secure_door])
   }
 });
