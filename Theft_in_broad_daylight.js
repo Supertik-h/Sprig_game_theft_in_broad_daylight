@@ -68,6 +68,11 @@ const pick = tune`
 59.40594059405941: F5~59.40594059405941 + G5~59.40594059405941 + A5~59.40594059405941 + E5~59.40594059405941 + D5~59.40594059405941,
 59.40594059405941: A5~59.40594059405941 + E5~59.40594059405941 + F5~59.40594059405941 + G5~59.40594059405941 + B5~59.40594059405941,
 1722.772277227723`
+const hule = tune`
+54.4464609800363: D4~54.4464609800363 + F5-54.4464609800363 + E4~54.4464609800363,
+54.4464609800363: D4~54.4464609800363 + C5/54.4464609800363 + B4/54.4464609800363 + A4/54.4464609800363 + F5-54.4464609800363,
+54.4464609800363: D4~54.4464609800363 + F5-54.4464609800363 + E4~54.4464609800363,
+1578.9473684210527`
 
 const ded = tune`
 85.47008547008546: F5~85.47008547008546 + E5~85.47008547008546 + D5/85.47008547008546 + C5^85.47008547008546 + A4-85.47008547008546,
@@ -78,7 +83,7 @@ const ded = tune`
 85.47008547008546: G4~85.47008547008546 + B4~85.47008547008546 + C5/85.47008547008546 + E4-85.47008547008546 + A4~85.47008547008546,
 2222.222222222222`
 
-//playTune(BackgroundSong, Infinity)
+playTune(BackgroundSong, Infinity)
 
 setLegend(
   [ player_fat, bitmap`
@@ -497,12 +502,12 @@ lsisp.....p
 ph...pn....p
 p....t.....p
 pppppp@ppppp
-....op..(p..
-.x...p...p..
-.....p...p..
+....op..(pgg
+.x...p...pgg
+.....p...pgg
 @ppdppptpptp
 .(p..pl....n
-..p.(p......
+.(p.(p......
 ..p@pppppp@p
 ..p.lp..np..
 12p..t...t.(`,
@@ -518,7 +523,12 @@ pppppppppp..
 ..p..pp..p..
 ..p.(pp..p..
 ..pptpp@pp..
-...n........`
+...n........`,
+  map`
+ffff
+ffff
+ffff
+ffff`
 ]
 
 
@@ -722,15 +732,24 @@ afterInput(() => {
   }, 8000);
     }
   }
+  if(levelNumber == 7){
+    addText(`Thanks for \n playing`, { x: 5, y: 6, color: color`0` })
+     addText(`Your score \n ${score}`, { x: 5, y: 8, color: color`0` })
+     getAll().forEach(sprite => {
+    sprite.remove();
+    });
+  }
 
 
   // jumping into the hole
   if(tilesWith(player_fat, hole).length >= 1){
+    playTune(hule, 1)
     fato.remove()
     checker += 1
   }
 
   if(tilesWith(player_thin, hole).length >= 1){
+    playTune(hule, 1)
     thino.remove()
     checker += 1
   }
